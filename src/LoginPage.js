@@ -1,4 +1,6 @@
 import 'fontsource-roboto';
+import Status from "./Status.js"
+import PostContainer from "./PostContainer.js"
 import { FormControl, Input, InputLabel, Button } from '@material-ui/core';
 import { useState, useEffect, setIsLoaded } from 'react';
 
@@ -8,6 +10,8 @@ import { useState, useEffect, setIsLoaded } from 'react';
 function LoginPage() {
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
+	const [status, setStatus] = useState("");
+	const [posts, setPosts] = useState([]);
 
 	const getdata = (evt) => {
 		evt.preventDefault();
@@ -18,7 +22,16 @@ function LoginPage() {
 		}).then(res => res.json())
 			.then(
 				(result) => {
-					console.log(result)
+					if (result.status == 200){
+						console.log(result);
+						setStatus(200);
+						setPosts(result.posts);
+					}
+					else {
+						console.log("DENIED");
+						setStatus("DEATH");
+						setPosts([]);
+					}
 				}
 			)
 	}
@@ -90,6 +103,16 @@ function LoginPage() {
 			<Button onClick={getdata}>
 				GET DATA
 		</Button>
+		<br />
+		<br />
+		<div>
+			<Status status={status}/>
+		</div>
+		<br />
+		<br />
+
+		<PostContainer posts={posts} />
+			
 		</>
 	);
 }

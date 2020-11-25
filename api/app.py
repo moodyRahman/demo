@@ -41,7 +41,10 @@ def jwtverify(route):
 @jwtverify
 def api():
 	print("YOUVE BEEN VERIFIED")
-	return jsonify(postdata)
+	out = {}
+	out["status"] = 200
+	out["posts"] = postdata
+	return out
 
 @app.route("/auth", methods=["POST"])
 def auth():
