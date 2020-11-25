@@ -15,15 +15,15 @@ function LoginPage() {
 			headers: {
 				'Authorization': localStorage.getItem("token")
 			}
-		}).then( res => res.json())
-		.then(
-			(result) => {
-				console.log(result)
-			}
-		)
+		}).then(res => res.json())
+			.then(
+				(result) => {
+					console.log(result)
+				}
+			)
 	}
 
-	const logout = (evt) =>{
+	const logout = (evt) => {
 		localStorage.removeItem("token");
 	}
 
@@ -59,36 +59,36 @@ function LoginPage() {
 
 	return (
 		<>
-		<form>
+			<form>
 
-			<FormControl>
-				<InputLabel htmlFor="username">username</InputLabel>
-				<Input id="username" onChange={e => setName(e.target.value)} />
+				<FormControl>
+					<InputLabel htmlFor="username">username</InputLabel>
+					<Input id="username" onChange={e => setName(e.target.value)} />
 
-			</FormControl>
+				</FormControl>
+				<br />
+				<FormControl>
+					<InputLabel htmlFor="password">password</InputLabel>
+					<Input id="password" onChange={e => setPassword(e.target.value)} />
+				</FormControl>
+
+				<Button onClick={submit}>
+					SUBMIT
+			</Button>
+			</form>
+
 			<br />
-			<FormControl>
-				<InputLabel htmlFor="password">password</InputLabel>
-				<Input id="password" onChange={e => setPassword(e.target.value)} />
-			</FormControl>
+			<br />
 
-			<Button onClick={submit}>
-				SUBMIT
-		</Button>
-		</form>
-
-		<br />
-		<br />
-
-		<Button onClick={logout}>
-			LOGOUT
+			<Button onClick={logout}>
+				LOGOUT
 		</Button>
 
-		<br />
-		<br />
+			<br />
+			<br />
 
-		<Button onClick={getdata}>
-			GET DATA
+			<Button onClick={getdata}>
+				GET DATA
 		</Button>
 		</>
 	);
