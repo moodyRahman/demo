@@ -1,8 +1,9 @@
+import {useContext, useState} from 'react';
 import 'fontsource-roboto';
 import Status from "./Status.js"
 import PostContainer from "./PostContainer.js"
+import {TokenContext} from "./TokenContext.js"
 import { FormControl, Input, InputLabel, Button } from '@material-ui/core';
-import { useState, useEffect, setIsLoaded } from 'react';
 
 
 
@@ -12,24 +13,25 @@ function LoginPage() {
 	const [password, setPassword] = useState("");
 	const [status, setStatus] = useState("");
 	const [posts, setPosts] = useState([]);
+	const { token, setToken } = useContext(TokenContext)
 
 	const getdata = (evt) => {
 		evt.preventDefault();
+		console.log(token)
 		fetch("http://localhost:5000/api", {
 			headers: {
-				'Authorization': localStorage.getItem("token")
+				'Authorization': token
 			}
 		}).then(res => res.json())
 			.then(
 				(result) => {
-					if (result.status == 200){
+					setStatus(result.status);
+					if (result.status === 200){
 						console.log(result);
-						setStatus(200);
 						setPosts(result.posts);
 					}
 					else {
 						console.log("DENIED");
-						setStatus("DEATH");
 						setPosts([]);
 					}
 				}
@@ -37,10 +39,10 @@ function LoginPage() {
 	}
 
 	const logout = (evt) => {
-		localStorage.removeItem("token");
+		setToken("")
 	}
 
-	const submit = (evt) => {
+	const login = (evt) => {
 		evt.preventDefault();
 		const data = {
 			username: name,
@@ -56,8 +58,10 @@ function LoginPage() {
 			.then(res => res.json())
 			.then(
 				(result) => {
-					if (result.status == 200) {
-						localStorage.setItem('token', result.token);
+					if (result.status === 200) {
+						console.log(token)
+						setToken(result.token);
+
 						console.log("LOGGED IN")
 					}
 
@@ -85,7 +89,7 @@ function LoginPage() {
 					<Input id="password" onChange={e => setPassword(e.target.value)} />
 				</FormControl>
 
-				<Button onClick={submit}>
+				<Button onClick={login}>
 					SUBMIT
 			</Button>
 			</form>
