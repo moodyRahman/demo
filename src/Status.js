@@ -1,10 +1,10 @@
 import Box from '@material-ui/core/Box';
 
-function Status(props) {
+function Status({status}) {
 
 	return (
 		<Box>
-			{props.status}
+			{status}
 		</Box>
 	);
 }
