@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JWT</title>
+</head>
+
+<body>
+
+	
+
+	<script>
+		async function postData(url = '', data = {}) {
+			const response = await fetch(url, {
+				method: 'POST', // *GET, POST, PUT, DELETE, etc
+				headers: {
+					'Content-Type': 'application/json',
+					"credentials": 'include',
+					"Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im1vb2R5In0.h7eF0dC1q3mIT6ODWxtEX21xSOiLK00MEgoNPc30xDU"
+				},
+				body: JSON.stringify(data)
+			});
+			return response.json();
+		}
+
+
+		function posting(e)
+		{
+			console.log("moood")
+			postData('http://localhost:5000/api', { username: "moody" })
+				.then(data => {
+					console.log(data); // JSON data parsed by `data.json()` call
+				});
+		}
+	
+	</script>
+
+	<button onclick="posting(this)">MOOOD</button>
+
+</body>
+
+</html>
