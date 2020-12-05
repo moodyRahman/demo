@@ -28,6 +28,7 @@ def jwtverify(route):
 	@wraps(route)
 	def wrapper(*args, **kwargs):
 			try:
+				print(request.headers["Authorization"])
 				decoded = jwt.decode(request.headers["Authorization"], secret_key, algorithms="HS256")
 				user = decoded["username"]
 				print(user)
